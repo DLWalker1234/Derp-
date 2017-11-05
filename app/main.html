@@ -1,0 +1,15 @@
+<div class="clearfix">
+  <form ng-Submit="post()" ng-show="authenticated">
+    <h4>{{current_user}} says</h4>
+    <textarea required class="form-control" maxlength="200" rows="3" placeholder="Say something" ng-model="newPost.derp"></textarea>
+    <input class="btn submit-btn pull-right" type="submit" value="Derp!" />
+  </form>
+</div>
+<div id="post-stream">
+	<h4>Derp Feed</h4>
+		<div class="post" ng-repeat="post in posts | orderBy:'time_stamp':true" ng-class-odd="'odd'" ng-class-even="'even'"> 
+			<p>{{post.derp}}</p>
+			<small>Posted by @{{post.derp_by}}</small>
+			<small class="pull-right">{{post.time_stamp | date:"h:mma 'on' MMM d, y"}}</small>
+		</div>
+</div>
