@@ -4,13 +4,15 @@ var router = express.Router();
 router.use(function(req, res, next){
   
   if(req.method === "GET"){
-    
+
     return next();
   }
 
   if(!req.isAuthenticated()){
     res.redirect('#/login');
   }
+
+  return next();
 })
 
 router.route('/posts')
