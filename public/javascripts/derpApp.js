@@ -1,4 +1,6 @@
 var app = angular.module('derpApp', ['ngRoute', 'ngResource']).run(function($rootScope) {
+
+  //user should not be authenticated at start
 	$rootScope.authenticated = false;
 	$rootScope.current_user = '';
 	
