@@ -78,3 +78,9 @@ app.controller('authController', function($scope, $http, $rootScope, $location){
     });
   };
 });
+
+// app.controller('chatController', ['$rootScope', '$scope', function($rootScope, $scope){
+//   var vm = this;
+//   var socket = window.io('localhost:3000/')
+// }])
+
