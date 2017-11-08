@@ -47,8 +47,7 @@ app.use(passport.session());
 app.use('/', index);
 app.use('/api', api);
 app.use('/auth', authenticate);
-app.use('/chat', chat);
-app.use('/trump', trump);
+
 
 
 //  404  error handler... a catch
