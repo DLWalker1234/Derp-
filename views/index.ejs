@@ -1,11 +1,32 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+	<head>
+		<title>Derp</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
+		<script type='text/javascript' src='/socket.io/socket.io.js'></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+		<script src="javascripts/derpApp.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="stylesheets/style.css">
+	</head>
+	<body ng-app="derpApp">
+		<div id='main' class="container">
+			<nav class="navbar-fluid navbar-default navbar-fixed-top">
+				<div class="container">
+					    <a class="navbar-brand" href="#"> Derp! </a>
+							<p class="navbar-text">Where all your bullshit can reside</p>
+					    <p class="navbar-right navbar-text" ng-hide="authenticated"><a href="#/login">Login</a> or <a href="#/register">Register</a></p>
+					    <p class="navbar-right navbar-text" ng-show="authenticated"><a href="#" ng-click="signout()">Logout</a></p>
+							<p class="navbar-right navbar-text" ng-show="authenticated">Signed in as {{current_user}}</p>
+							<!-- <p class="navbar-right navbar-text" ng-show="authenticated"><a href="trump.html">Trump</a></p>
+							<p class="navbar-right navbar-text" ng-show="authenticated"><a href="#/chat">Chat</a></p>
+				</div> -->
+			</nav>
+			<div class="col-md-offset-2 col-md-8">
+				<div ng-view>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

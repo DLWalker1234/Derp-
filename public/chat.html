@@ -1,0 +1,16 @@
+<div ng-controller='chatController'>
+  <input type="text" ng-model='userName' placeholder='Enter a username'>
+  <br>
+  <input type="text" ng-enter='sendMessage()' ng-model='message' placeholder='Enter your message here' size='50'></input>
+  <br>
+  <button size='100' ng-click='sendMessage()'>Submit</button>
+  <br>
+  <p>Filter Messages:
+  <input type="text" ng-model='filterText'>
+  <ul>
+    <li ng-repeat='text in messages | filter : filterText'>
+      <p>{{text.username}} - {{text.message}}</p>
+    </li>
+  </ul>
+
+</div>
