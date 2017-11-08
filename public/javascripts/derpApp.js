@@ -53,64 +53,69 @@ app.directive('ngEnter', function () {
   };
 });
 
+app.factory('postService', function($resource){
+	return $resource('/api/posts/:id');
+});
 
-app.factory('postService', function($http){
-  deletePost = (postId) =>{
-    console.log(postId);
-    $http.delete(`/posts/${postId}`);
 
-  }
-  getAll = () => {
-    return new Promise( (resolve, reject) =>{
-      $http.get(`/posts`);
+// app.factory('postService', function($http){
+//   deletePost = (postId) =>{
+//     console.log(postId);
+//     $http.delete(`/posts/${postId}`);
+
+//   }
+//   getAll = () => {
+//     return new Promise( (resolve, reject) =>{
+//       $http.get(`/posts`);
       
-      })
-      resolve(data)
-    }
+//       })
+//       resolve(data)
+//     }
     
   
-  return { deletePost, getAll };
-});
+//   return { deletePost, getAll };
+// });
 
-// // Chat factory
-// app.factory('MessageCreator', ['$http', function ($http){
-//   return {
-//     postMessage: function (message, callback) {
-//       $http.post('/message', message)
-//       .success(function(data, status){
-//         callback(data, false);
-//       }).
-//       error(function(data, status) {
-//         callback(data, true);
-//       });
-//     }
-//   }
-//   }])
 
 app.controller('mainController', function(postService, $scope, $rootScope, $http){
-  // $scope.posts = postService.query();
-  postService.getAll()
-  .then((data)=>{
-    $scope.posts = data
-  })
-	$scope.newPost = {derp_by: '', derp: '', time_stamp: ''};
+    $scope.posts = postService.query();
+    $scope.newPost = {created_by: '', text: '', created_at: ''};
+    
+    $scope.post = function() {
+      $scope.newPost.created_by = $rootScope.current_user;
+      $scope.newPost.created_at = Date.now();
+      postService.save($scope.newPost, function(){
+        $scope.posts = postService.query();
+        $scope.newPost = {created_by: '', text: '', created_at: ''};
+      });
+    };
+  });
+  
+
+
+
+//   postService.getAll()
+//   .then((data)=>{
+//     $scope.posts = data
+//   })
+// 	$scope.newPost = {derp_by: '', derp: '', time_stamp: ''};
 	
-	$scope.post = function() {
-	  $scope.newPost.derp_by = $rootScope.current_user;
-	  $scope.newPost.time_stamp = Date.now();
-	  postService.save($scope.newPost, function(){
-      postService.getAll()
-      .then((data)=>{
-        $scope.posts = data;
-      })
-	    $scope.newPost = {derp_by: '', derp: '', time_stamp: ''};
-	  });
-  };
-  $scope.delete = function(post) {
-    console.log("ANYTHONG!", post);
-    postService.deletePost(post._id)
-  };
-});
+// 	$scope.post = function() {
+// 	  $scope.newPost.derp_by = $rootScope.current_user;
+// 	  $scope.newPost.time_stamp = Date.now();
+// 	  postService.save($scope.newPost, function(){
+//       postService.getAll()
+//       .then((data)=>{
+//         $scope.posts = data;
+//       })
+// 	    $scope.newPost = {derp_by: '', derp: '', time_stamp: ''};
+// 	  });
+//   };
+//   $scope.delete = function(post) {
+//     console.log("ANYTHONG!", post);
+//     postService.deletePost(post._id)
+//   };
+// });
 
 app.controller('authController', function($scope, $http, $rootScope, $location){
   $scope.user = {username: '', password: ''};
@@ -142,62 +147,3 @@ app.controller('authController', function($scope, $http, $rootScope, $location){
     });
   };
 });
-
-app.controller('trumpController', function(postService, $scope, $rootScope){
-  
-  console.log("TRUMP!")
-	
-	
-});
-
-
-
-// app.controller('chatController',  function ($scope, MessageCreator) {
-//   $scope.userName = '';
-//   $scope.message = '';
-//   $scope.filterText = '';
-//   $scope.messages = [];
-//   var socket = io.connect();
-
-//   //recieve new messages from chat
-//   socket.on('receiveMessage', function (data) {
-//     $scope.messages.unshift(data);
-//     $scope.$apply();
-//   });
-
-//   //load previous messages from chat
-//   socket.on('pastMessages', function (data) {
-//     $scope.messages = data.reverse();
-//     // data.forEach(function (message) {
-//     // 	$scope.messages.unshift(message);
-//     // })
-//     $scope.$apply();
-//   });
-
-//   //send a message to the server
-//   $scope.sendMessage = function () {
-//     if ($scope.userName == '') {
-//       //need to pass {current_user}
-//       window.alert('Choose a username');
-//       return;
-//     }
-
-//     if (!$scope.message == '') {
-//       var chatMessage = {
-//         'username' : $scope.userName,
-//         'message' : $scope.message
-//       };
-
-//       MessageCreator.postMessage(chatMessage, function (result, error) {
-//         if (error) {
-//           window.alert('Error saving to DB');
-//           return;
-//         }
-//         $scope.message = '';
-//       });
-//     }
-//   };
-//   });
-
-
-
